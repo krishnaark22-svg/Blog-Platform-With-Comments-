@@ -1,0 +1,17 @@
+const router = require("express").Router();
+const Comment = require("../models/Comment");
+
+// Add comment
+router.post("/", async (req, res) => {
+  const comment = new Comment(req.body);
+  await comment.save();
+  res.json(comment);
+});
+
+// Get comments by post
+router.get("/:postId", async (req, res) => {
+  const comments = await Comment.find({ postId: req.params.postId });
+  res.json(comments);
+});
+
+module.exports = router;
